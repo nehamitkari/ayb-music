@@ -29,5 +29,5 @@ module.exports = {
     serverQueue.textChannel.send(`${message.author} 🔀 shuffled the queue`).catch(console.error);
   }
 
-    }
+}
   

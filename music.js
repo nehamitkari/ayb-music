@@ -1,4 +1,4 @@
-require('dotenv').config()
+require("dotenv").config();
 const { Client, Collection } = require("discord.js");
 const client = new Client();
 client.queue = new Map();

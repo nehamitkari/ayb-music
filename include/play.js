@@ -1,5 +1,4 @@
 const ytdlDiscord = require("ytdl-core-discord");
-require("dotenv").config();
 const { MessageEmbed } = require("discord.js");
 
 
