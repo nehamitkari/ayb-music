@@ -1,22 +1,21 @@
-require('dotenv').config();
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
-const { play } = require("../../include/play.js"); 
+const { play } = require("../../include/play.js");
 const ytdl = require("ytdl-core");
 const YouTubeAPI = require("simple-youtube-api");
 const { MessageEmbed } = require('discord.js');
 const youtube = new YouTubeAPI(YOUTUBE_API_KEY);
-module.exports = { 
-    config: {
-        name: "play",
-        description: "plays music",
-        usage: "song name or link",
-        category: "music",
-        accessableby: "Members",
-        aliases: ["p"]
-    },
-    run: async (client, message, args, guild) => {
-const { channel } = message.member.voice;
-      const user = message.guild.member(client.user)
+module.exports = {
+  config: {
+    name: "play",
+    description: "plays music",
+    usage: "song name or link",
+    category: "music",
+    accessableby: "Members",
+    aliases: ["p"]
+  },
+  run: async (client, message, args, guild) => {
+    const { channel } = message.member.voice;
+    const user = message.guild.member(client.user);
 
     if (!args.length)
       return message
@@ -29,7 +28,7 @@ const { channel } = message.member.voice;
       return message.reply("Cannot connect to voice channel: Missing Permissions");
     if (!permissions.has("SPEAK"))
       return message.reply("I cannot speak in this voice channel: Missing Permissions");
-	
+
 
     const search = args.join(" ");
     const videoPattern = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/gi;
@@ -67,9 +66,9 @@ const { channel } = message.member.voice;
         };
 
         const embed = new MessageEmbed()
-        .setTitle(songInfo.videoDetails.title)
-        .setURL(song.img)
-        .setImage(songInfo.videoDetails.video_image)
+          .setTitle(songInfo.videoDetails.title)
+          .setURL(song.img)
+          .setImage(songInfo.videoDetails.video_image);
 
       } catch (error) {
         if (error.message.includes("copyright")) {
@@ -109,6 +108,7 @@ const { channel } = message.member.voice;
 
     if (!serverQueue) {
       try {
+        // deepcode ignore PureMethodReturnValueIgnored: Not actually joining an array. VoiceChannel#join is a library method
         queueConstruct.connection = await channel.join();
         play(queueConstruct.songs[0], message);
       } catch (error) {
@@ -118,6 +118,6 @@ const { channel } = message.member.voice;
         return message.channel.send(`Could not join the channel: ${error}`).catch(console.error);
       }
     }
-      await user.voice.setDeaf(true);
+    await user.voice.setDeaf(true);
   }
 };

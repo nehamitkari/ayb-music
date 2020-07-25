@@ -1,8 +1,7 @@
-require("dotenv").config();
-let prefix = process.env.PREFIX; 
+let prefix = process.env.PREFIX;
 
 module.exports = async (client, message) => {
-    
+
   let args = message.content
     .slice(prefix.length)
     .trim()
