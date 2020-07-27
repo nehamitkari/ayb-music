@@ -18,14 +18,14 @@ module.exports = {
     const serverQueue = message.client.queue.get(message.guild.id);
     if (!serverQueue) return message.reply("There is nothing playing.").catch(console.error);
 
-    serverQueue.songs.forEach(song => {
+    const song = serverQueue.songs[0];
+    if (!song) return message.reply("There is nothing playing!");
 
-      const songNow = new MessageEmbed()
-        .setTitle(song.title)
-        .setURL(song.url)
-        .setImage(song.img);
+    const songNow = new MessageEmbed()
+      .setTitle(song.title)
+      .setURL(song.url)
+      .setImage(song.img);
 
-      message.channel.send(songNow);
-    });
+    message.channel.send(songNow);
   }
 };
